@@ -12,20 +12,29 @@ const Timers = styled.div`
 `;
 
 const Timer = styled.div`
-  border: 1px solid gray;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   padding: 20px;
-  margin: 10px;
+  margin: 15px;
   font-size: 1.5rem;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
 `;
 
-const TimerTitle = styled.div``;
+const TimerTitle = styled.div`
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
 
 const TimersView = () => {
   const timers = [
     { title: "Stopwatch", C: <Stopwatch /> },
-    { title: "Countdown", C: <Countdown /> },
-    { title: "XY", C: <XY /> },
-    { title: "Tabata", C: <Tabata /> },
+    { title: "Countdown", C: <Countdown startTime={120} /> },
+    { title: "XY", C: <XY roundTime={60} rounds={10} /> },
+    { title: "Tabata", C: <Tabata workTime={20} restTime={10} rounds={8} /> } // Example props
   ];
 
   return (
