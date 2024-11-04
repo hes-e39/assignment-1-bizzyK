@@ -1,5 +1,7 @@
-// biome-ignore lint/style/useImportType: <explanation>
 import React, { useState, useEffect } from 'react';
+import Panel from '../panel/Panel';
+import Button from '../button/Button';
+import DisplayTime from '../displayTime/DisplayTime';
 
 const Stopwatch: React.FC = () => {
     const [time, setTime] = useState(0);
@@ -33,31 +35,20 @@ const Stopwatch: React.FC = () => {
     };
 
     const handleFastForward = () => {
-        setTime(0); // End the timer immediately
-        setIsActive(false);
-    };
-
-    const formatTime = (seconds: number) => {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        setTime(0); // Set time to 0
+        setIsActive(false); // Stop the timer
     };
 
     return (
-        <div className="stopwatch">
-            <h2>Stopwatch</h2>
-            <div className="time-display">{formatTime(time)}</div>
+        <Panel title="Stopwatch">
+            <DisplayTime time={time} />
             <div className="controls">
-                <button onClick={handleStart} disabled={isActive && !isPaused}>
-                    Start
-                </button>
-                <button onClick={handlePauseResume} disabled={!isActive}>
-                    {isPaused ? 'Resume' : 'Pause'}
-                </button>
-                <button onClick={handleReset}>Reset</button>
-                <button onClick={handleFastForward}>Fast Forward</button>
+                <Button onClick={handleStart} label="Start" disabled={isActive && !isPaused} />
+                <Button onClick={handlePauseResume} label={isPaused ? 'Resume' : 'Pause'} disabled={!isActive} />
+                <Button onClick={handleReset} label="Reset" />
+                <Button onClick={handleFastForward} label="Fast Forward" />
             </div>
-        </div>
+        </Panel>
     );
 };
 

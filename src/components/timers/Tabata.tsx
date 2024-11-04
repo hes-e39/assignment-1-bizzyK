@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import DisplayRounds from '../displayRounds/DisplayRounds';
+import Panel from '../panel/Panel';
+import Button from '../button/Button';
+import DisplayTime from '../displayTime/DisplayTime';
 
 interface TabataProps {
     workTime: number; // in seconds
@@ -16,21 +20,31 @@ const Tabata: React.FC<TabataProps> = ({ workTime, restTime, rounds }) => {
     // Timer effect
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
+
         if (isActive && !isPaused && currentRound <= rounds) {
             timer = setInterval(() => {
-                setTime((prevTime) => prevTime - 1);
-            }, 1000);
+                setTime((prevTime) => {
+                    if (prevTime > 0) return prevTime - 1;
 
-            if (time === 0) {
-                if (isWorkInterval) {
-                    setTime(restTime);
-                    setIsWorkInterval(false);
-                } else {
-                    setTime(workTime);
-                    setIsWorkInterval(true);
-                    setCurrentRound((prevRound) => prevRound + 1);
-                }
-            }
+                    // If time hits zero, switch intervals or round
+                    if (isWorkInterval) {
+                        if (currentRound === rounds) {
+                            // End the timer after the last work interval of the final round
+                            setIsActive(false);
+                        } else {
+                            setTime(restTime);
+                            setIsWorkInterval(false);
+                        }
+                    } else {
+                        // Start a new round if it was a rest interval
+                        setTime(workTime);
+                        setIsWorkInterval(true);
+                        setCurrentRound((prevRound) => prevRound + 1);
+                    }
+
+                    return isWorkInterval ? restTime : workTime;
+                });
+            }, 1000);
         }
 
         return () => {
@@ -58,35 +72,23 @@ const Tabata: React.FC<TabataProps> = ({ workTime, restTime, rounds }) => {
     const handleFastForward = () => {
         setIsActive(false);
         setTime(0); // End the timer immediately
-    };
-
-    const formatTime = (seconds: number) => {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        setCurrentRound(rounds); // Move to last round
     };
 
     return (
-        <div className="tabata">
-            <h2>Tabata Timer</h2>
-            <div className="round-display">
-                Round {currentRound}/{rounds}
-            </div>
+        <Panel title="Tabata Timer">
+            <DisplayRounds currentRound={currentRound} totalRounds={rounds} />
             <div className="interval-display">
                 {isWorkInterval ? 'Work' : 'Rest'} Interval
             </div>
-            <div className="time-display">{formatTime(time)}</div>
+            <DisplayTime time={time} />
             <div className="controls">
-                <button onClick={handleStart} disabled={isActive && !isPaused}>
-                    Start
-                </button>
-                <button onClick={handlePauseResume} disabled={!isActive}>
-                    {isPaused ? 'Resume' : 'Pause'}
-                </button>
-                <button onClick={handleReset}>Reset</button>
-                <button onClick={handleFastForward}>Fast Forward</button>
+                <Button onClick={handleStart} label="Start" disabled={isActive && !isPaused} />
+                <Button onClick={handlePauseResume} label={isPaused ? 'Resume' : 'Pause'} disabled={!isActive} />
+                <Button onClick={handleReset} label="Reset" />
+                <Button onClick={handleFastForward} label="Fast Forward" />
             </div>
-        </div>
+        </Panel>
     );
 };
 
