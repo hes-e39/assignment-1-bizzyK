@@ -6,6 +6,7 @@
   --panel-border: #e0e0e0;
   --button-disabled-bg: #cccccc;
   --button-hover: #0056b3;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 [data-theme='dark'] {
@@ -16,6 +17,7 @@
   --panel-border: #333333;
   --button-disabled-bg: #555555;
   --button-hover: #8f68d6;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow for dark mode */
 }
 
 body {
@@ -28,23 +30,121 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Container for all timers */
 .timers-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  padding: 20px;
+  flex-wrap: wrap;       /* Allows timers to wrap onto the next line on smaller screens */
+  gap: 20px;             /* Adds space between each timer */
+  justify-content: center; /* Centers the timers within the container */
+  padding: 20px;         /* Adds padding around the entire group of timers */
+  /* No background, border, or shadow to keep it invisible */
 }
 
-.timers-container > div {
-  background-color: var(--panel-background);
+.timer-container {
   border: 1px solid var(--panel-border);
   border-radius: 8px;
   padding: 20px;
-  max-width: 250px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  background-color: var(--panel-background);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between; /* Aligns buttons in a row */
+  width: 100%; /* Ensures buttons take full width inside the container */
+  margin-top: auto; /* Pushes controls to the bottom of the container */
+  padding-top: 10px; /* Adds a little space between the timer and the buttons */
+}
+
+button {
+  flex: 1; /* Ensures all buttons take equal width */
+  max-width: 100px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 10px 20px;
+  margin: 5px 5px 5px 0; /* Adds spacing between buttons */
+  border: none;
+  border-radius: 4px;
+  font-size: .75rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+button:disabled {
+  background-color: var(--button-disabled-bg);
+  cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+  background-color: var(--button-hover);
+}
+
+/* Position toggle in the top-right corner */
+.theme-toggle-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.theme-toggle-container:hover {
+  color: var(--primary-color); /* Highlight on hover */
+}
+
+/* Switch styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
 }
 
 /* Time Display */
@@ -66,27 +166,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* Button styling */
-button {
-  background-color: var(--primary-color);
-  color: var(--text-color);
-  padding: 10px 20px;
-  margin: 5px;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
-button:disabled {
-  background-color: var(--button-disabled-bg);
-  cursor: not-allowed;
-}
-
-button:not(:disabled):hover {
-  background-color: var(--button-hover);
-}
 
 /* Link styling */
 li a {

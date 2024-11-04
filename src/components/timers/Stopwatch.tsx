@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Panel from '../panel/Panel';
 import Button from '../button/Button';
 import DisplayTime from '../displayTime/DisplayTime';
 
@@ -40,7 +39,8 @@ const Stopwatch: React.FC = () => {
     };
 
     return (
-        <Panel title="Stopwatch">
+        <div className="timer-container">
+            <h2>Stopwatch</h2>
             <DisplayTime time={time} />
             <div className="controls">
                 <Button onClick={handleStart} label="Start" disabled={isActive && !isPaused} />
@@ -48,7 +48,7 @@ const Stopwatch: React.FC = () => {
                 <Button onClick={handleReset} label="Reset" />
                 <Button onClick={handleFastForward} label="Fast Forward" />
             </div>
-        </Panel>
+        </div>
     );
 };
 

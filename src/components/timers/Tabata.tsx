@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import DisplayRounds from '../displayRounds/DisplayRounds';
-import Panel from '../panel/Panel';
 import Button from '../button/Button';
 import DisplayTime from '../displayTime/DisplayTime';
 
@@ -29,14 +28,13 @@ const Tabata: React.FC<TabataProps> = ({ workTime, restTime, rounds }) => {
                     // If time hits zero, switch intervals or round
                     if (isWorkInterval) {
                         if (currentRound === rounds) {
-                            // End the timer after the last work interval of the final round
-                            setIsActive(false);
+                            setIsActive(false); // End timer after last work interval of final round
                         } else {
                             setTime(restTime);
                             setIsWorkInterval(false);
                         }
                     } else {
-                        // Start a new round if it was a rest interval
+                        // Start new round if it was a rest interval
                         setTime(workTime);
                         setIsWorkInterval(true);
                         setCurrentRound((prevRound) => prevRound + 1);
@@ -76,7 +74,8 @@ const Tabata: React.FC<TabataProps> = ({ workTime, restTime, rounds }) => {
     };
 
     return (
-        <Panel title="Tabata Timer">
+        <div className="timer-container">
+            <h2>Tabata Timer</h2>
             <DisplayRounds currentRound={currentRound} totalRounds={rounds} />
             <div className="interval-display">
                 {isWorkInterval ? 'Work' : 'Rest'} Interval
@@ -88,7 +87,7 @@ const Tabata: React.FC<TabataProps> = ({ workTime, restTime, rounds }) => {
                 <Button onClick={handleReset} label="Reset" />
                 <Button onClick={handleFastForward} label="Fast Forward" />
             </div>
-        </Panel>
+        </div>
     );
 };
 

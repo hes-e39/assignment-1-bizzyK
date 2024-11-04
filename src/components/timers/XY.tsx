@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import DisplayRounds from '../displayRounds/DisplayRounds';
-import Panel from '../panel/Panel';
 import Button from '../button/Button';
 import DisplayTime from '../displayTime/DisplayTime';
 
@@ -61,7 +60,8 @@ const XY: React.FC<XYProps> = ({ roundTime, rounds }) => {
     };
 
     return (
-        <Panel title="XY Timer">
+        <div className="timer-container">
+            <h2>XY Timer</h2>
             <DisplayRounds currentRound={currentRound} totalRounds={rounds} />
             <DisplayTime time={time} />
             <div className="controls">
@@ -70,7 +70,7 @@ const XY: React.FC<XYProps> = ({ roundTime, rounds }) => {
                 <Button onClick={handleReset} label="Reset" />
                 <Button onClick={handleFastForward} label="Fast Forward" />
             </div>
-        </Panel>
+        </div>
     );
 };
 

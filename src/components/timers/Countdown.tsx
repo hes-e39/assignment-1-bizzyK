@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Panel from '../panel/Panel';
 import Button from '../button/Button';
 import DisplayTime from '../displayTime/DisplayTime';
 
@@ -46,7 +45,8 @@ const Countdown: React.FC<CountdownProps> = ({ startTime }) => {
     };
 
     return (
-        <Panel title="Countdown Timer">
+        <div className="timer-container">
+            <h2>Countdown Timer</h2>
             <DisplayTime time={time} />
             <div className="controls">
                 <Button onClick={handleStart} label="Start" disabled={isActive} />
@@ -54,7 +54,7 @@ const Countdown: React.FC<CountdownProps> = ({ startTime }) => {
                 <Button onClick={handleReset} label="Reset" />
                 <Button onClick={handleFastForward} label="Fast Forward" />
             </div>
-        </Panel>
+        </div>
     );
 };
 

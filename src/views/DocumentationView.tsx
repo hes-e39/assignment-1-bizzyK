@@ -5,7 +5,6 @@ import DocumentComponent from "../components/documentation/DocumentComponent";
 import Button from "../components/button/Button";
 import DisplayTime from "../components/displayTime/DisplayTime";
 import DisplayRounds from "../components/displayRounds/DisplayRounds";
-import Panel from "../components/panel/Panel";
 import ThemeToggle from "../components/themeToggle/ThemeToggle";
 import Loading from "../components/generic/Loading"; // Include this if needed in documentation
 
@@ -58,15 +57,6 @@ const Documentation = () => {
                 ]}
             />
 
-            {/* Panel Documentation */}
-            <DocumentComponent
-                title="Panel"
-                component={<Panel title="Sample Panel"><p>Panel content goes here</p></Panel>}
-                propDocs={[
-                    { prop: "title", description: "Title displayed at the top of the panel", type: "string", defaultValue: "''" },
-                    { prop: "children", description: "Content displayed inside the panel", type: "ReactNode", defaultValue: "null" },
-                ]}
-            />
 
             {/* ThemeToggle Documentation */}
             <DocumentComponent
