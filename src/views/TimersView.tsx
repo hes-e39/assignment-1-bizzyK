@@ -1,43 +1,19 @@
-import styled from "styled-components";
+// TimersView.tsx
 
-import Stopwatch from "../components/timers/Stopwatch";
-import Countdown from "../components/timers/Countdown";
-import XY from "../components/timers/XY";
-import Tabata from "../components/timers/Tabata";
-
-const Timers = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Timer = styled.div`
-  border: 1px solid gray;
-  padding: 20px;
-  margin: 10px;
-  font-size: 1.5rem;
-`;
-
-const TimerTitle = styled.div``;
+import Timer from '../components/timers/Timer';
 
 const TimersView = () => {
-  const timers = [
-    { title: "Stopwatch", C: <Stopwatch /> },
-    { title: "Countdown", C: <Countdown /> },
-    { title: "XY", C: <XY /> },
-    { title: "Tabata", C: <Tabata /> },
-  ];
-
-  return (
-    <Timers>
-      {timers.map((timer) => (
-        <Timer key={`timer-${timer.title}`}>
-          <TimerTitle>{timer.title}</TimerTitle>
-          {timer.C}
-        </Timer>
-      ))}
-    </Timers>
-  );
+    return (
+        <div>
+            <h1 className="view-header">Timers</h1>
+            <div className="timers-container">
+                <Timer type="stopwatch" />
+                <Timer type="countdown" startTime={120} />
+                <Timer type="xy" roundTime={60} rounds={10} />
+                <Timer type="tabata" workTime={20} restTime={10} rounds={8} />
+            </div>
+        </div>
+    );
 };
 
 export default TimersView;
